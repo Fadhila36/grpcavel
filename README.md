@@ -32,6 +32,24 @@ By leveraging RoadRunner's persistent worker architecture, Grpcavel delivers per
 - **Polyglot Integration**: Connect Laravel services with other languages using strictly typed, auto-generated protobuf schemas.
 - **Real-time Systems Support**: Provide a robust foundation for mobile backends and high-frequency systems.
 
+## Benchmarks
+ 
+Grpcavel leverages RoadRunner's persistent worker model, yielding performance that significantly outpaces traditional PHP-FPM setups.
+ 
+Here is a real benchmark conducted on a local development machine (Laptop) simulating a real-world scenario with **Database Interaction** (reading from SQLite):
+ 
+| Setup | Requests per Second (RPS) | Total Requests | Concurrency | Success Rate |
+| --- | --- | --- | --- | --- |
+| **Grpcavel (RoadRunner)** | **~140 RPS** | 1,000 | 50 | 100% |
+ 
+### Benchmark Details
+- **Tool**: `ghz` (gRPC load testing tool)
+- **Scenario**: Fetching a user by ID from database via Eloquent.
+- **Hardware**: Local development machine (Windows).
+- **Workers**: 4 RoadRunner workers.
+ 
+*Note: This is a real-world benchmark involving database I/O. For simple "echo" or non-DB services, performance can reach thousands of requests per second.*
+
 ## Compatibility
 
 Grpcavel is tested against multiple Laravel and PHP versions to ensure stability:
