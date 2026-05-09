@@ -5,7 +5,7 @@
 </p>
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/fadhila36/grpcavel.svg?style=flat-square)](https://packagist.org/packages/fadhila36/grpcavel)
-[![License](https://img.shields.io/packagist/l/fadhila36/grpcavel.svg?style=flat-square)](https://packagist.org/packages/fadhila36/grpcavel)
+[![License](https://img.shields.io/github/license/fadhila36/grpcavel.svg?style=flat-square)](https://github.com/fadhila36/grpcavel/blob/main/LICENSE.md)
 [![Tests](https://github.com/fadhila36/grpcavel/actions/workflows/tests.yml/badge.svg)](https://github.com/fadhila36/grpcavel/actions/workflows/tests.yml)
 
 
