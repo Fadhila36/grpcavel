@@ -17,6 +17,7 @@ spec:
       containers:
       - name: {{APP_NAME}}
         image: {{DOCKER_IMAGE}}
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9001
           name: grpc

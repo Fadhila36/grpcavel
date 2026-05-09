@@ -6,13 +6,14 @@ RUN apk add --no-cache \
     libzip-dev \
     libprotobuf \
     protobuf \
+    linux-headers \
     $PHPIZE_DEPS
 
 # Install PHP extensions
 RUN docker-php-ext-install zip pcntl pdo_mysql sockets
 
 # Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Set working directory
 WORKDIR /var/www
