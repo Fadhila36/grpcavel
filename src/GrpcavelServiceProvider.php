@@ -15,6 +15,7 @@ use Grpcavel\Commands\SyncCommand;
 use Grpcavel\Commands\WorkerCommand;
 use Grpcavel\Commands\CacheCommand;
 use Grpcavel\Commands\ClearCacheCommand;
+use Grpcavel\Commands\KubernetesCommand;
 use Grpcavel\Contracts\ExceptionMapperContract;
 use Grpcavel\Contracts\MiddlewarePipelineContract;
 use Grpcavel\Contracts\ProtoCompilerContract;
@@ -96,6 +97,7 @@ final class GrpcavelServiceProvider extends ServiceProvider
                 MakeClientCommand::class,
                 CacheCommand::class,
                 ClearCacheCommand::class,
+                KubernetesCommand::class,
             ]);
         }
     }

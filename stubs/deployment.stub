@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{APP_NAME}}-grpc
+  labels:
+    app: {{APP_NAME}}-grpc
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: {{APP_NAME}}-grpc
+  template:
+    metadata:
+      labels:
+        app: {{APP_NAME}}-grpc
+    spec:
+      containers:
+      - name: {{APP_NAME}}
+        image: {{DOCKER_IMAGE}}
+        ports:
+        - containerPort: 9001
+          name: grpc
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        # Uncomment after implementing gRPC health check
+        # livenessProbe:
+        #   grpc:
+        #     port: 9001
+        #   initialDelaySeconds: 5
+        # readinessProbe:
+        #   grpc:
+        #     port: 9001
+        #   initialDelaySeconds: 5
