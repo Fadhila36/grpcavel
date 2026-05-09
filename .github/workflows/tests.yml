@@ -17,6 +17,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # Laravel 10
+          - php: '8.2'
+            laravel: '10.*'
+            testbench: '8.*'
+          - php: '8.3'
+            laravel: '10.*'
+            testbench: '8.*'
+
           # Laravel 11
           - php: '8.2'
             laravel: '11.*'
@@ -65,7 +73,7 @@ jobs:
           composer remove orchestra/testbench --dev --no-interaction --no-update
           composer require "illuminate/support:${{ matrix.laravel }}" --no-interaction --no-update
           composer require "orchestra/testbench:${{ matrix.testbench }}" --dev --no-interaction --no-update
-          composer update --prefer-dist --no-interaction --no-progress --with-all-dependencies
+          composer update --prefer-dist --no-interaction --no-progress
 
       - name: Execute tests
         run: php vendor/bin/pest
