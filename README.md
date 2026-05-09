@@ -16,8 +16,21 @@ Grpcavel is a gRPC framework for Laravel that focuses on developer experience. I
 Building gRPC services in PHP is traditionally painful. Grpcavel makes it feel like building a standard Laravel API:
 
 - **Code-First**: Your PHP classes are the source of truth. Protos are generated automatically.
-- **RoadRunner Runtime**: Uses a persistent worker model for high performance.
-- **Laravel Native**: Supports Laravel validation, middleware, and Eloquent.
+- **RoadRunner Runtime**: Uses a persistent worker model for extreme performance.
+- **Laravel Native**: Supports Laravel validation, middleware, and Eloquent out of the box.
+
+### Why Grpcavel over Node.js or Golang?
+
+For many engineering teams, Laravel serves as the core application stack. Grpcavel was designed to empower PHP developers with the raw performance and efficiency of gRPC, eliminating the need to adopt new languages or fragment the technology stack solely for inter-service communication.
+
+By leveraging RoadRunner's persistent worker architecture, Grpcavel delivers performance that challenges traditional PHP limitations. The goal is not to replace Go or Node.js, but to provide a seamless, high-performance gRPC implementation tailored specifically for the Laravel ecosystem.
+
+### Key Use Cases
+- **Enterprise Microservices**: Orchestrate communication between distributed Laravel applications.
+- **High-Throughput Internal APIs**: Build low-latency internal services.
+- **Optimized Backend Communication**: Achieve faster serialization and transmission than traditional REST/JSON.
+- **Polyglot Integration**: Connect Laravel services with other languages using strictly typed, auto-generated protobuf schemas.
+- **Real-time Systems Support**: Provide a robust foundation for mobile backends and high-frequency systems.
 
 ## Compatibility
 
@@ -189,6 +202,12 @@ Grpcavel is hardened for long-lived processes:
 | `grpc:make-client` | Create a client wrapper. |
 | `grpc:make-request` | Create a request DTO. |
 | `grpc:make-response` | Create a response DTO. |
+
+## Support the Project
+
+If you find Grpcavel helpful, please consider giving it a star ⭐ on GitHub! It helps more developers discover the project and motivates us to keep improving it.
+
+[![Star History Chart](https://api.star-history.com/svg?repos=fadhila36/grpcavel&type=Date)](https://star-history.com/#fadhila36/grpcavel&Date)
 
 ## Open Source & Contributing
 
