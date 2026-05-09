@@ -19,6 +19,21 @@ Building gRPC services in PHP is traditionally painful. Grpcavel makes it feel l
 - **RoadRunner Runtime**: Uses a persistent worker model for high performance.
 - **Laravel Native**: Supports Laravel validation, middleware, and Eloquent.
 
+## Compatibility
+
+Grpcavel is tested against multiple Laravel and PHP versions to ensure stability:
+
+| Laravel Version | PHP Version |
+| --- | --- |
+| **10.x** | 8.2, 8.3 |
+| **11.x** | 8.2, 8.3, 8.4 |
+| **12.x** | 8.2, 8.3, 8.4 |
+| **13.x** | 8.3, 8.4 |
+
+## Documentation
+
+Full documentation is available at [github.com/Fadhila36/grpcavel-docs](https://github.com/Fadhila36/grpcavel-docs).
+
 ## Installation
 
 You can install the package via composer:
