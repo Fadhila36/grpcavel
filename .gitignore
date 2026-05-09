@@ -1,0 +1,32 @@
+/vendor/
+/.idea/
+/.vscode/
+/.phpunit.result.cache
+/phpstan-*-cache/
+/node_modules/
+
+# RoadRunner
+/rr
+/.rr.yaml
+/art/logo.png_backup
+
+# Laravel / PHP artifacts
+.env
+.env.backup
+.env.production
+composer.lock
+/bootstrap/cache/*
+
+# Generated gRPC stubs (usually not committed in packages)
+# But users might want to commit them in their apps.
+# For the package development itself, we keep them clean.
+/src/Generated/
+/proto/*.proto
+
+# Logs
+/logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

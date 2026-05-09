@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Grpcavel\Testing\GrpcClient;
+
+/**
+ * Client wrapper for gRPC service calls.
+ * 
+ * In a real-world scenario, this client would typically use a gRPC client extension
+ * or a library like 'grpc/grpc' to communicate with a remote server.
+ * For local testing and development, you can use GrpcClient::call().
+ */
+final class {{ class }}
+{
+    /**
+     * Call a remote gRPC method.
+     */
+    public function call(string $method, object $request, string $serviceClass): object
+    {
+        // Integration point for your preferred gRPC client transport.
+        // For now, this serves as a scaffold for your client-side logic.
+        return GrpcClient::call($serviceClass, $method, $request);
+    }
+}
