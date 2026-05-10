@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: grpcavel-test
+spec:
+  template:
+    spec:
+      containers:
+      - name: grpcavel-test
+        image: php:8.3-cli-alpine
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          apk add --no-cache unzip libzip-dev libprotobuf protobuf linux-headers $PHPIZE_DEPS
+          docker-php-ext-install zip pcntl sockets > /dev/null
+          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer > /dev/null
+          composer install --no-interaction
+          ./vendor/bin/pest
+        volumeMounts:
+        - name: code
+          mountPath: /var/www
+        - name: vendor-dir
+          mountPath: /var/www/vendor
+        workingDir: /var/www
+      volumes:
+      - name: code
+        hostPath:
+          path: /run/desktop/mnt/host/d/Kerjaan/new-2026/full-grpcavel/grpcavel
+      - name: vendor-dir
+        emptyDir: {}
+      restartPolicy: Never
+  backoffLimit: 0

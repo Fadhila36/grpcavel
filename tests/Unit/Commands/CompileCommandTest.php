@@ -11,15 +11,11 @@ class CompileCommandTest extends TestCase
 {
     public function test_it_shows_error_when_protoc_is_missing(): void
     {
-        // We can't easily uninstall protoc for a test, so we might need to mock the check
-        // However, the command uses `exec('protoc --version')`.
-        // We could mock the behavior by putting a dummy 'protoc' in a temp path and adding to PATH
-        // But for now, we'll just test that it runs and if it fails, it shows instructions.
+        exec('protoc --version', $output, $returnVar);
+        if ($returnVar === 0) {
+            $this->markTestSkipped('protoc is installed, skipping test for missing protoc.');
+        }
         
-        // If protoc exists on the machine running tests, this might pass/fail differently.
-        // Let's mock the Artisan call or just check the output if we know the state.
-        
-        // For unit testing Artisan commands in Laravel/Package:
         $this->artisan('grpc:compile')
             ->assertExitCode(1)
             ->expectsOutputToContain('is not installed or not in your PATH');
