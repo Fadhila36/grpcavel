@@ -16,14 +16,28 @@ final readonly class ServiceDefinition
         public array $middlewareClasses,
     ) {}
 
+    /**
+     * @param array<string, mixed> $properties
+     */
     public static function __set_state(array $properties): self
     {
+        /** @var string $className */
+        $className = $properties['className'];
+        /** @var string $serviceName */
+        $serviceName = $properties['serviceName'];
+        /** @var string $package */
+        $package = $properties['package'];
+        /** @var array<HandlerDefinition> $handlers */
+        $handlers = $properties['handlers'];
+        /** @var array<string> $middlewareClasses */
+        $middlewareClasses = $properties['middlewareClasses'];
+
         return new self(
-            className: $properties['className'],
-            serviceName: $properties['serviceName'],
-            package: $properties['package'],
-            handlers: $properties['handlers'],
-            middlewareClasses: $properties['middlewareClasses'],
+            className: $className,
+            serviceName: $serviceName,
+            package: $package,
+            handlers: $handlers,
+            middlewareClasses: $middlewareClasses,
         );
     }
 }

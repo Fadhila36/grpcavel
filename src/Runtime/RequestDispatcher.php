@@ -19,7 +19,6 @@ final class RequestDispatcher implements RequestDispatcherContract
     public function __construct(
         private readonly MiddlewarePipelineContract $middleware,
         private readonly ValidatorContract $validator,
-        private readonly SerializerContract $serializer,
         private readonly ExceptionMapperContract $exceptionMapper,
     ) {}
 
@@ -45,6 +44,7 @@ final class RequestDispatcher implements RequestDispatcherContract
             $requestDto = $body;
 
             if (is_string($body)) {
+                /** @var class-string $requestClass */
                 $requestClass = $handler->requestClass;
                 $reflection = new \ReflectionClass($requestClass);
                 $requestDto = $reflection->newInstanceWithoutConstructor();
@@ -91,6 +91,9 @@ final class RequestDispatcher implements RequestDispatcherContract
         );
     }
 
+    /**
+     * @return 0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16
+     */
     private function mapStatusToCode(string $status): int
     {
         return match ($status) {

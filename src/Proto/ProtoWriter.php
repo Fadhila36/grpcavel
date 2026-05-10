@@ -103,6 +103,7 @@ final class ProtoWriter
 
         // Nested message definitions come first (before fields), matching proto3 convention.
         foreach ($message['nested'] ?? [] as $nested) {
+            /** @var array{name: string, fields: array<int, array<string, mixed>>, nested?: array<int, array<string, mixed>>} $nested */
             $nestedLines = $this->renderMessage($nested, $indentLevel + 1);
             $lines = array_merge($lines, $nestedLines);
             $lines[] = '';
@@ -110,7 +111,15 @@ final class ProtoWriter
 
         // Field declarations.
         foreach ($message['fields'] as $field) {
-            $lines[] = "{$innerIndent}{$field['protoType']} {$field['name']} = {$field['fieldNumber']};";
+            $protoType = $field['protoType'] ?? '';
+            $name = $field['name'] ?? '';
+            $fieldNumber = $field['fieldNumber'] ?? 0;
+
+            if (!is_string($protoType) || !is_string($name) || !is_int($fieldNumber)) {
+                throw new \RuntimeException('Invalid field definition in message ' . $message['name']);
+            }
+
+            $lines[] = "{$innerIndent}{$protoType} {$name} = {$fieldNumber};";
         }
 
         $lines[] = "{$indent}}";

@@ -29,8 +29,11 @@ abstract class GrpcTestCase extends OrchestraTestCase
      */
     protected function getEnvironmentSetUp($app): void
     {
-        $app['config']->set('grpc.services_path', base_path('app/Grpc/Services'));
-        $app['config']->set('grpc.proto_path', base_path('proto'));
-        $app['config']->set('grpc.generated_path', base_path('app/Grpc/Generated'));
+        /** @var \Illuminate\Contracts\Config\Repository $config */
+        $config = $app['config'];
+
+        $config->set('grpc.services_path', base_path('app/Grpc/Services'));
+        $config->set('grpc.proto_path', base_path('proto'));
+        $config->set('grpc.generated_path', base_path('app/Grpc/Generated'));
     }
 }

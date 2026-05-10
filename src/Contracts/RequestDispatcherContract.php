@@ -18,7 +18,7 @@ interface RequestDispatcherContract
      * @param  string             $method   The RPC method name being called
      * @param  string             $body     The binary protobuf request payload
      * @param  array<string, mixed> $context  The gRPC context/metadata
-     * @return string  The binary protobuf response payload
+     * @return string|object  The binary protobuf response payload or DTO object
      */
     public function dispatch(
         ServiceDefinition $service,

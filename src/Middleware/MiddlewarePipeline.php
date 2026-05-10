@@ -20,13 +20,24 @@ final class MiddlewarePipeline implements MiddlewarePipelineContract
     public function run(array $middlewareClasses, object $request, callable $handler): object
     {
         $globalMiddleware = config('grpc.middleware', []);
+        if (!is_array($globalMiddleware)) {
+            $globalMiddleware = [];
+        }
         
         // Final list: global -> class-level -> method-level
         $allMiddleware = array_merge($globalMiddleware, $middlewareClasses);
 
-        return (new Pipeline(app()))
+        $result = (new Pipeline(app()))
             ->send($request)
             ->through($allMiddleware)
-            ->then($handler);
+            ->then(function ($req) use ($handler) {
+                return $handler($req);
+            });
+
+        if (!is_object($result)) {
+            throw new \RuntimeException('Middleware pipeline did not return an object');
+        }
+
+        return $result;
     }
 }

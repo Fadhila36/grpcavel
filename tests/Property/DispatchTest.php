@@ -20,7 +20,6 @@ class DispatchTest extends TestCase
         $dispatcher = new RequestDispatcher(
             $this->app->make(MiddlewarePipelineContract::class),
             $this->app->make(ValidatorContract::class),
-            $this->app->make(SerializerContract::class),
             $this->app->make(ExceptionMapperContract::class),
         );
 

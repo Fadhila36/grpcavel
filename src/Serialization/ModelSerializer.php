@@ -30,17 +30,21 @@ final class ModelSerializer implements SerializerContract
 
     public function serialize(object $dto): array
     {
-        return $this->serializeValue($dto);
+        $result = $this->serializeValue($dto);
+        if (!is_array($result)) {
+            throw new \RuntimeException('Serialization did not return an array');
+        }
+        return $result;
     }
 
     private function serializeValue(mixed $value): mixed
     {
-        if ($value instanceof Arrayable) {
-            return $this->serializeArray($value->toArray());
-        }
-
         if ($value instanceof Collection) {
             return $this->serializeArray($value->all());
+        }
+
+        if ($value instanceof Arrayable) {
+            return $this->serializeArray($value->toArray());
         }
 
         if (is_object($value)) {
@@ -54,6 +58,10 @@ final class ModelSerializer implements SerializerContract
         return $value;
     }
 
+    /**
+     * @param array<array-key, mixed> $array
+     * @return array<array-key, mixed>
+     */
     private function serializeArray(array $array): array
     {
         foreach ($array as $key => $value) {

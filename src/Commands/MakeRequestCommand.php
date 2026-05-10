@@ -30,6 +30,11 @@ final class MakeRequestCommand extends Command
     public function handle(): int
     {
         $name = $this->argument('name');
+        if (!is_string($name)) {
+            $this->error('The name argument must be a string.');
+            return self::FAILURE;
+        }
+
         $className = Str::studly($name);
         
         if (! str_ends_with($className, 'Request')) {

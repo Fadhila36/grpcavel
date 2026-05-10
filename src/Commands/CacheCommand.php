@@ -31,7 +31,12 @@ final class CacheCommand extends Command
         $services = $discoverer->discover();
 
         $path = config('grpc.cache_path');
-        $directory = dirname((string) $path);
+        if (!is_string($path)) {
+            $this->error('grpc.cache_path is not configured.');
+            return self::FAILURE;
+        }
+
+        $directory = dirname($path);
 
         if (! File::isDirectory($directory)) {
             File::makeDirectory($directory, 0755, true);

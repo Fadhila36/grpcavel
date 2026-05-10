@@ -40,6 +40,14 @@ final class ServiceRegistry
     }
 
     /**
+     * Get a service definition by its service name.
+     */
+    public function get(string $serviceName): ?ServiceDefinition
+    {
+        return $this->services[$serviceName] ?? null;
+    }
+
+    /**
      * Return all registered service definitions.
      *
      * @return array<ServiceDefinition>

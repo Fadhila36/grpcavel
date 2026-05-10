@@ -13,15 +13,17 @@ final class GrpcClient
     /**
      * Call a gRPC method in-process for testing.
      *
-     * @template T of object
      * @param  string  $serviceName
      * @param  string  $method
      * @param  object  $request
-     * @return T
+     * @return object
      */
     public static function call(string $serviceName, string $method, object $request): object
     {
+        /** @var ServiceRegistry $registry */
         $registry = App::make(ServiceRegistry::class);
+
+        /** @var RequestDispatcherContract $dispatcher */
         $dispatcher = App::make(RequestDispatcherContract::class);
 
         $definition = null;
@@ -51,6 +53,10 @@ final class GrpcClient
                 $handler = $h;
                 break;
             }
+        }
+
+        if (! $handler) {
+            throw new \RuntimeException("Handler for method $method not found in service $serviceName.");
         }
 
         $response = $responseBinary;

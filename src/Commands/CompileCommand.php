@@ -30,8 +30,11 @@ final class CompileCommand extends Command
             return self::FAILURE;
         }
 
-        $protoPath = (string) config('grpc.proto_path', base_path('proto'));
-        $generatedPath = (string) config('grpc.generated_path', app_path('Grpc/Generated'));
+        $protoPathConfig = config('grpc.proto_path', base_path('proto'));
+        $protoPath = is_string($protoPathConfig) ? $protoPathConfig : base_path('proto');
+
+        $generatedPathConfig = config('grpc.generated_path', app_path('Grpc/Generated'));
+        $generatedPath = is_string($generatedPathConfig) ? $generatedPathConfig : app_path('Grpc/Generated');
 
         if (! File::isDirectory($protoPath)) {
             $this->error("Proto directory not found: $protoPath");

@@ -18,6 +18,10 @@ final class ProtoCompiler implements ProtoCompilerContract
         private readonly string $protoPath,
     ) {}
 
+    /**
+     * @param array<int, ServiceDefinition> $services
+     * @return array<int, string>
+     */
     public function compile(array $services): array
     {
         $this->ensureProtoDirectoryExists();
@@ -57,6 +61,10 @@ final class ProtoCompiler implements ProtoCompilerContract
         return $definitions;
     }
 
+    /**
+     * @param array<string, mixed> $definitions
+     * @param array<int, string> $processedClasses
+     */
     private function extractMessageDefinition(string $className, array &$definitions, array &$processedClasses): void
     {
         if (in_array($className, $processedClasses)) {
@@ -64,6 +72,8 @@ final class ProtoCompiler implements ProtoCompilerContract
         }
 
         $processedClasses[] = $className;
+        
+        /** @var class-string $className */
         $reflection = new ReflectionClass($className);
         $shortName = $reflection->getShortName();
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Grpcavel\Tests\Unit\Serialization;
 
 use Grpcavel\Serialization\ModelSerializer;
+use Grpcavel\Contracts\SerializerContract;
 use Grpcavel\Tests\TestCase;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Arrayable;

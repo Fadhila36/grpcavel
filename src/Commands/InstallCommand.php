@@ -109,9 +109,14 @@ final class InstallCommand extends Command
      */
     private function getRoadRunnerConfigTemplate(): string
     {
-        $host = config('grpc.server.host', '0.0.0.0');
-        $port = config('grpc.server.port', 9001);
-        $workers = config('grpc.workers', 4);
+        $hostConfig = config('grpc.server.host', '0.0.0.0');
+        $host = is_string($hostConfig) ? $hostConfig : '0.0.0.0';
+
+        $portConfig = config('grpc.server.port', 9001);
+        $port = is_int($portConfig) ? $portConfig : 9001;
+
+        $workersConfig = config('grpc.workers', 4);
+        $workers = is_int($workersConfig) ? $workersConfig : 4;
 
         return <<<YAML
 version: "3"

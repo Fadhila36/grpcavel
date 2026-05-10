@@ -27,6 +27,11 @@ final class ClearCacheCommand extends Command
     {
         $path = config('grpc.cache_path');
 
+        if (!is_string($path)) {
+            $this->info('No gRPC cache file found (cache path not configured).');
+            return self::SUCCESS;
+        }
+
         if (File::exists($path)) {
             File::delete($path);
             $this->info('gRPC service discovery cache cleared.');

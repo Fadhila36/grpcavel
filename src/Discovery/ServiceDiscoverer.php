@@ -91,6 +91,7 @@ final class ServiceDiscoverer implements ServiceDiscovererContract
     private function isInServicesPath(string $className): bool
     {
         try {
+            /** @var class-string $className */
             $reflection = new ReflectionClass($className);
             $fileName = $reflection->getFileName();
 
@@ -126,6 +127,7 @@ final class ServiceDiscoverer implements ServiceDiscovererContract
     }
 
     /**
+     * @param ReflectionClass<object> $reflection
      * @return array<HandlerDefinition>
      */
     private function discoverHandlers(ReflectionClass $reflection): array
@@ -155,6 +157,9 @@ final class ServiceDiscoverer implements ServiceDiscovererContract
         return $handlers;
     }
 
+    /**
+     * @param ReflectionClass<object> $serviceReflection
+     */
     private function qualifiesAsHandler(ReflectionMethod $method, ReflectionClass $serviceReflection): bool
     {
         if ($method->getDeclaringClass()->getName() !== $serviceReflection->getName()) {

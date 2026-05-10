@@ -15,7 +15,7 @@ final class KubernetesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'grpc:k8s {--force : Overwrite existing files}';
+    protected $signature = 'grpc:k8s {--force : Overwrite existing files} {--compose : Generate docker-compose.yml}';
 
     /**
      * The console command description.
@@ -28,13 +28,22 @@ final class KubernetesCommand extends Command
     {
         $this->info('Generating Kubernetes manifests and Dockerfile...');
 
-        $appName = $this->ask('What is the name of your application?', config('app.name', 'laravel'));
+        $defaultAppName = config('app.name', 'laravel');
+        $defaultAppName = is_string($defaultAppName) ? $defaultAppName : 'laravel';
+
+        $appName = $this->ask('What is the name of your application?', $defaultAppName);
+        $appName = is_string($appName) ? $appName : 'laravel';
         $appName = Str::slug($appName);
         
         $imageName = $this->ask('What is the Docker image name?', "$appName:latest");
+        $imageName = is_string($imageName) ? $imageName : "$appName:latest";
 
         $this->generateDockerfile();
         $this->generateK8sManifests($appName, $imageName);
+
+        if ($this->option('compose') || $this->confirm('Do you want to generate docker-compose.yml?', false)) {
+            $this->generateDockerCompose($imageName);
+        }
 
         $this->newLine();
         $this->info('Kubernetes files generated successfully!');
@@ -89,6 +98,11 @@ final class KubernetesCommand extends Command
         ]);
     }
 
+    /**
+     * @param string $targetPath
+     * @param string $stubName
+     * @param array<string, string> $replacements
+     */
     private function generateFileFromStub(string $targetPath, string $stubName, array $replacements): void
     {
         if (File::exists($targetPath) && ! $this->option('force')) {
@@ -113,5 +127,31 @@ final class KubernetesCommand extends Command
 
         File::put($targetPath, $content);
         $this->line('  Generated: <fg=gray>kubernetes/' . basename($targetPath) . '</>');
+    }
+
+    private function generateDockerCompose(string $imageName): void
+    {
+        $path = base_path('docker-compose.yml');
+
+        if (File::exists($path) && ! $this->option('force')) {
+            if (! $this->confirm('docker-compose.yml already exists. Do you want to overwrite it?', false)) {
+                $this->line('  Skipped docker-compose.yml generation.');
+                return;
+            }
+        }
+
+        $stubPath = __DIR__ . '/../../stubs/docker-compose.stub';
+        
+        if (! File::exists($stubPath)) {
+            $this->error('docker-compose.stub not found.');
+            return;
+        }
+
+        $content = File::get($stubPath);
+        $content = str_replace(['{{IMAGE_NAME}}', '{{PORT}}'], [$imageName, '9001'], $content);
+
+        File::put($path, $content);
+        
+        $this->line('  Generated: <fg=gray>docker-compose.yml</>');
     }
 }

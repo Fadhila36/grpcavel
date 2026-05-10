@@ -30,12 +30,14 @@ final class RateLimitMiddleware
         $key = Request::ip() ?? 'global';
         
         $maxAttempts = config('grpc.rate_limit.max_attempts', 60);
+        $maxAttempts = is_int($maxAttempts) ? $maxAttempts : 60;
+        
         $decayMinutes = config('grpc.rate_limit.decay_minutes', 1);
 
         if ($this->limiter->tooManyAttempts($key, $maxAttempts)) {
             throw new \RuntimeException(
                 'Rate limit exceeded. Please try again in ' . $this->limiter->availableIn($key) . ' seconds.',
-                GrpcStatus::RESOURCE_EXHAUSTED->value
+                GrpcStatus::RESOURCE_EXHAUSTED
             );
         }
 
